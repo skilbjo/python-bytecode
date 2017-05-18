@@ -1,0 +1,20 @@
+#!/usr/bin/env python
+#set -eoux pipefail
+
+import marshal
+import sys
+import dis
+
+def parse_pyc(f):
+    magic_number = f.read(4)
+    assert magic_number.encode('hex') == '03f30d0a'
+    f.read(4)  # next 4 bytes is the timestamp
+    return marshal.load(f)
+
+
+if __name__ == '__main__':
+    """ Usage: python interpreter.py 1.pyc """
+    f = open(sys.argv[1], 'rb')
+    bytecode = parse_pyc(f)
+    print dis.dis(bytecode)
+

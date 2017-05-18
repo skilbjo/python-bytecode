@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+set -eoux pipefail
+
+file=$1
+
+python interpreter.py "src/$file.pyc"
